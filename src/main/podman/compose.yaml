@@ -1,0 +1,10 @@
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: taskdb
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
