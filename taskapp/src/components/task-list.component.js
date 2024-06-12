@@ -81,37 +81,41 @@ export default class TasksList extends Component {
         <div className="col-md-6">
           {currentTask ? (
             <div>
-              <h4>task</h4>
+              <h4>{currentTask.title}</h4>
               <div>
-                <label>
-                  <strong>Title: </strong>
-                </label>{" "}
-                {currentTask.title}
-              </div>
-              <div>
-                <label>
-                  <strong>Description:</strong>
-                </label>{" "}
                 {currentTask.description}
               </div>
               <div>
                 <label>
-                  <strong>State:</strong>
+                  <strong>Status:</strong>
                 </label>{" "}
-                {currentTask.published ? "Published" : "Pending"}
+                {currentTask.status}
               </div>
-
-              <Link
-                to={"/tasks/" + currentTask.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
+              <div>
+                <label>
+                  <strong>Due Date:</strong>
+                </label>{" "}
+                {currentTask.dueDate}
+              </div>
+              <div>
+                <label>
+                  <strong>Priority</strong>
+                </label>{" "}
+                {currentTask.priority}
+              </div>
+              <button type="button">
+                <Link
+                  to={"/task/" + currentTask.id}
+                  className="badge badge-warning"
+                >
+                  Edit
+                </Link>
+                </button>
+                
             </div>
           ) : (
             <div>
               <br />
-              <p>View active tasks here! </p>
             </div>
           )}
         </div>

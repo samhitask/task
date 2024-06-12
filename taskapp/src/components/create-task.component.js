@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import TaskDataService from "../task.service";
 
 export default class AddTask extends Component {
+
+
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -16,10 +18,16 @@ export default class AddTask extends Component {
       id: null,
       title: "",
       description: "", 
-      published: false,
+      status: 'TO DO',
+      dueDate: null,
+      priority: '',
 
       submitted: false
+
     };
+
+    
+  
   }
 
   onChangeTitle(e) {
@@ -57,7 +65,9 @@ export default class AddTask extends Component {
       description: this.state.description,
       status: this.state.status,
       dueDate: this.state.dueDate,
-      priority: this.state.priority
+      priority: this.state.priority,
+
+      submitted: true
     };
 
     TaskDataService.create(data)
@@ -93,12 +103,24 @@ export default class AddTask extends Component {
   }
 
   render() {
+
+    let statuses = [
+      { label: 'TO DO', value: 'TO DO'},
+      { label: 'IN PROGRESS', value: 'IN PROGRESS'},
+      { label: 'COMPLETE', value: 'COMPLETE'}
+    ]
+
+    let priorities = [
+      { label: 'LOW', value: 'LOW'},
+      { label: 'MEDIUM', value: 'MEDIUM'},
+      { label: 'HIGH', value: 'HIGH'}
+    ]
           return (
             <div className="submit-form">
               {this.state.submitted ? (
                 <div>
                   <h4>Task added successfully!</h4>
-                  <button className="btn btn-success" onClick={this.newTutorial}>
+                  <button className="btn btn-success" onClick={this.newTask}>
                     Add
                   </button>
                 </div>
@@ -129,17 +151,18 @@ export default class AddTask extends Component {
                       name="description"
                     />
                   </div>
-                  <div className="form-group">
+                  
+                <div>  
+                  <div className='form-group'>
                     <label htmlFor="status">Status</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="status"
-                      required
-                      value={this.state.status}
-                      onChange={this.onChangeStatus}
-                      name="status"
-                    />
+                    <br/>
+                    <select onChange={this.onStatusChange}>
+                      <option value = "Select a status">-- Select a status -- </option> 
+                        {statuses.map((st) => ( <option key = {st.label} value={st.value}>{st.label}
+                      </option>
+                      ))}
+                      </select>
+                      </div>
                   </div>
                   <div className="form-group">
                     <label htmlFor="dueDate">Due Date</label>
@@ -153,19 +176,20 @@ export default class AddTask extends Component {
                       name="dueDate"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="priority">Priority</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="priority"
-                      required
-                      value={this.state.priority}
-                      onChange={this.onChangePriority}
-                      name="priority"
-                    />
+                  <div>  
+                  <div className='form-group'>
+                    <label htmlFor="status">Priority: </label>
+                    <br/>
+                    <select onChange={this.onPriorityChange}>
+                      <option value = "Select a priority">-- Select a priority -- </option> 
+                        {priorities.map((pr) => ( <option key = {pr.label} value={pr.value}>{pr.label}
+                      </option>
+                      ))}
+                      </select>
+                      </div>
                   </div>
-      
+                 
+                  <br/>
                   <button onClick={this.saveTask} className="btn btn-success">
                     Submit
                   </button>

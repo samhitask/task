@@ -13,7 +13,20 @@
   margin: auto;
 }
 
+.form {
+  padding: 0.5rem;
+}
+
 .edit-form {
   max-width: 300px;
   margin: auto;
+}
+
+@fontface {
+  font-family: 'Spectral';
+  src: url('https://fonts.googleapis.com/css?family=Spectral')
+}
+
+body {
+  font-family: 'Spectral';
 }
