@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "../global.css"
-import { Button }  from 'react-bootstrap';
+import { Button, Form }  from 'react-bootstrap';
 
 export default class AddTask extends Component {
 
@@ -119,86 +119,81 @@ export default class AddTask extends Component {
       { label: 'MEDIUM', value: 'MEDIUM'},
       { label: 'HIGH', value: 'HIGH'}
     ]
-          return (
-            <div className="submit-form">
-              {this.state.submitted ? (
-                <div>
-                  <br/>
-                  <h4>Task added successfully!</h4>
-                  <button className="btn btn-success" onClick={this.createTask}>
-                    Add more?
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="title"
-                      required
-                      value={this.state.title}
-                      onChange={this.onChangeTitle}
-                      name="title"
-                    />
-                  </div>
-      
-                  <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="description"
-                      required
-                      value={this.state.description}
-                      onChange={this.onChangeDescription}
-                      name="description"
-                    />
-                  </div>
-                  
-                <div>  
-                  <div className='form-group'>
-                    <label htmlFor="status">Status</label>
-                    <br/>
-                    <select onChange={this.onChangeStatus}>
-                      <option value = "Select a status">-- Select a status -- </option> 
-                        {statuses.map((st) => ( <option key = {st.label} value={st.value}>{st.label}
-                      </option>
-                      ))}
-                      </select>
-                      </div>
-                  </div>
-                  <div className="form-group">
-                      <label htmlFor="dueDate">Due Date</label>
-                      <br />
-                      <DatePicker
-                        selected={this.state.dueDate}
-                        onChange={this.onChangeDueDate}
-                        dateFormat="yyyy-MM-dd"
-                      />
-                    </div>
-                  <div>  
-                  <div className='form-group'>
-                    <label htmlFor="status">Priority: </label>
-                    <br/>
-                    <select onChange={this.onChangePriority}>
-                      <option value = "Select a priority">-- Select a priority -- </option> 
-                        {priorities.map((pr) => ( <option key = {pr.label} value={pr.value}>{pr.label}
-                      </option>
-                      ))}
-                      </select>
-                      </div>
-                  </div>
-                 
-                  <br/>
-                  <Button variant="primary" size="md" onClick={this.saveTask}>
-                    Submit
-                  </Button>
+    return (
+      <div className="submit-form">
+        {this.state.submitted ? (
+          <div>
+            <br />
+            <h4>Task added successfully!</h4>
+            <Button variant="primary" href="/add-tasks" className="success">
+              Add more?
+            </Button>
+          </div>
+        ) : (
+          <Form>
+            <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={this.state.title}
+                onChange={this.onChangeTitle}
+                name="title"
+              />
+            </Form.Group>
 
-                </div>
-              )}
-            </div>
-          );
-        }
-      }
+            <Form.Group controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={this.state.description}
+                onChange={this.onChangeDescription}
+                name="description"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="status">
+              <Form.Label>Status</Form.Label>
+              <Form.Select onChange={this.onChangeStatus}>
+                <option value=""> Select a status </option>
+                {statuses.map((st) => (
+                  <option key={st.label} value={st.value}>
+                    {st.label}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group controlId="dueDate">
+              <Form.Label>Due Date</Form.Label>
+              <br />
+              <DatePicker
+                selected={this.state.dueDate}
+                onChange={this.onChangeDueDate}
+                dateFormat="yyyy-MM-dd"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="priority">
+              <Form.Label>Priority</Form.Label>
+              <Form.Select onChange={this.onChangePriority}>
+                <option value="">Select a priority</option>
+                {priorities.map((pr) => (
+                  <option key={pr.label} value={pr.value}>
+                    {pr.label}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            <br />
+            <Button variant="primary" size="md" onClick={this.saveTask}>
+              Submit
+            </Button>
+          </Form>
+        )}
+      </div>
+    );
+  }
+}

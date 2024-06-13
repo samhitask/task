@@ -3,7 +3,7 @@ import TaskDataService from "../task.service";
 import { withRouter } from './with-router';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from 'react-bootstrap/Button';
+import { Button, Form } from 'react-bootstrap';
 
 class Task extends Component {
   constructor(props) {
@@ -170,61 +170,62 @@ class Task extends Component {
           <div className="edit-form">
             <h4>Edit Task: {currentTask.title}</h4>
             
-            <form>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  value={currentTask.title}
-                  onChange={this.onChangeTitle}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  value={currentTask.description}
-                  onChange={this.onChangeDescription}
-                />
-              </div>
-              <div className='form-group'>
-                <label htmlFor="status">Status</label>
-                <br/>
-                <select value={currentTask.status} onChange={this.onChangeStatus}>
-                  {statuses.map((st) => (
-                    <option key={st.value} value={st.value}>
-                      {st.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                      <label htmlFor="dueDate">Due Date</label>
-                      <br/>
-                      <DatePicker
-                        selected={currentTask.dueDate}
-                        onChange={this.onChangeDueDate}
-                        dateFormat="yyyy-MM-dd"
-                      />
-                    </div>
-              <div className="form-group">
-                <label htmlFor="priority">Priority</label>
-                <br/>
-                <select value={currentTask.priority} onChange={this.onChangePriority}>
+            <Form>
+            <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={currentTask.title}
+                onChange={this.onChangeTitle}
+                name="title"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={currentTask.description}
+                onChange={this.onChangeDescription}
+                name="description"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="status">
+              <Form.Label>Status</Form.Label>
+              <Form.Select value={currentTask.status} onChange={this.onChangeStatus}>
+                    {statuses.map((st) => (
+                      <option key={st.value} value={st.value}>
+                        {st.label}
+                      </option>
+                    ))}
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group controlId="dueDate">
+              <Form.Label>Due Date</Form.Label>
+              <br />
+              <DatePicker
+                selected={currentTask.dueDate}
+                onChange={this.onChangeDueDate}
+                dateFormat="yyyy-MM-dd"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="priority">
+              <Form.Label>Priority</Form.Label>
+              <Form.Select value={currentTask.priority} onChange={this.onChangePriority}>
                   {priorities.map((pr) => (
                     <option key={pr.value} value={pr.value}>
                       {pr.label}
                     </option>
                   ))}
-                </select>
-              </div>
+                </Form.Select>
+            </Form.Group>
 
-  
-            </form>
+          </Form>
 
            
             <br/>
