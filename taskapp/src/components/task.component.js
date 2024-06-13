@@ -23,7 +23,7 @@ class Task extends Component {
         title: "",
         description: "",
         status: "",
-        dueDate: "",
+        dueDate: Date(),
         priority: "",
         published: false
       },
@@ -81,11 +81,13 @@ class Task extends Component {
   }
 
   onChangeDueDate = (date) => {
-    this.setState({
-      dueDate: date
-    });
-  };
-
+    this.setState(prevState => ({
+      currentTask: {
+        ...prevState.currentTask,
+        dueDate: date
+      }
+    }));
+  }
   getTask(id) {
     TaskDataService.get(id)
       .then(response => {
@@ -202,7 +204,7 @@ class Task extends Component {
                       <label htmlFor="dueDate">Due Date</label>
                       <br/>
                       <DatePicker
-                        selected={this.state.dueDate}
+                        selected={currentTask.dueDate}
                         onChange={this.onChangeDueDate}
                         dateFormat="yyyy-MM-dd"
                       />
@@ -230,7 +232,7 @@ class Task extends Component {
               >
             
               Delete
-            </button>{' '}
+            </button>.{' '}
 
             <button
               type="submit"
