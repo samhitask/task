@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "../global.css"
 
 export default class AddTask extends Component {
 
@@ -19,7 +22,7 @@ export default class AddTask extends Component {
       title: "",
       description: "", 
       status: 'TO DO',
-      dueDate: null,
+      dueDate: new Date(),
       priority: '',
 
       submitted: false
@@ -53,11 +56,11 @@ export default class AddTask extends Component {
     });
   }
 
-  onChangeDueDate(e) {
+  onChangeDueDate = (date) => {
     this.setState({
-      dueDate: e.target.value
+      dueDate: date
     });
-  }
+  };
 
   saveTask() {
     var data = {
@@ -94,7 +97,7 @@ export default class AddTask extends Component {
       id: null,
       title: "",
       description: "",
-      dueDate: "",
+      dueDate: Date,
       status: "",
       priority: "",
 
@@ -107,7 +110,7 @@ export default class AddTask extends Component {
     let statuses = [
       { label: 'TO DO', value: 'TO DO'},
       { label: 'IN PROGRESS', value: 'IN PROGRESS'},
-      { label: 'COMPLETE', value: 'COMPLETE'}
+      { label: 'DONE', value: 'DONE'}
     ]
 
     let priorities = [
@@ -119,9 +122,10 @@ export default class AddTask extends Component {
             <div className="submit-form">
               {this.state.submitted ? (
                 <div>
+                  <br/>
                   <h4>Task added successfully!</h4>
                   <button className="btn btn-success" onClick={this.newTask}>
-                    Add
+                    Add more?
                   </button>
                 </div>
               ) : (
@@ -156,7 +160,7 @@ export default class AddTask extends Component {
                   <div className='form-group'>
                     <label htmlFor="status">Status</label>
                     <br/>
-                    <select onChange={this.onStatusChange}>
+                    <select onChange={this.onChangeStatus}>
                       <option value = "Select a status">-- Select a status -- </option> 
                         {statuses.map((st) => ( <option key = {st.label} value={st.value}>{st.label}
                       </option>
@@ -165,22 +169,19 @@ export default class AddTask extends Component {
                       </div>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="dueDate">Due Date</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="dueDate"
-                      required
-                      value={this.state.dueDate}
-                      onChange={this.onChangeDueDate}
-                      name="dueDate"
-                    />
-                  </div>
+                      <label htmlFor="dueDate">Due Date</label>
+                      <br />
+                      <DatePicker
+                        selected={this.state.dueDate}
+                        onChange={this.onChangeDueDate}
+                        dateFormat="yyyy-MM-dd"
+                      />
+                    </div>
                   <div>  
                   <div className='form-group'>
                     <label htmlFor="status">Priority: </label>
                     <br/>
-                    <select onChange={this.onPriorityChange}>
+                    <select onChange={this.onChangePriority}>
                       <option value = "Select a priority">-- Select a priority -- </option> 
                         {priorities.map((pr) => ( <option key = {pr.label} value={pr.value}>{pr.label}
                       </option>
@@ -190,7 +191,7 @@ export default class AddTask extends Component {
                   </div>
                  
                   <br/>
-                  <button onClick={this.saveTask} className="btn btn-success">
+                  <button onClick={this.saveTask} className="btn btn-success" >
                     Submit
                   </button>
                 </div>

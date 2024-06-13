@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import { withRouter } from '../common/with-router';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class Task extends Component {
   constructor(props) {
@@ -78,16 +80,11 @@ class Task extends Component {
     }));
   }
 
-  onChangeDueDate(e) {
-    const dueDate = e.target.value;
-    
-    this.setState(prevState => ({
-      currentTask: {
-        ...prevState.currentTask,
-        dueDate: dueDate
-      }
-    }));
-  }
+  onChangeDueDate = (date) => {
+    this.setState({
+      dueDate: date
+    });
+  };
 
   getTask(id) {
     TaskDataService.get(id)
@@ -133,7 +130,7 @@ class Task extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({
-          message: "The Task was updated successfully!"
+          message: "\nThe task was updated successfully!"
         });
       })
       .catch(e => {
@@ -145,7 +142,7 @@ class Task extends Component {
     TaskDataService.delete(this.state.currentTask.id)
       .then(response => {
         console.log(response.data);
-        this.props.router.navigate('/Tasks');
+        this.props.router.navigate('/tasks');
       })
       .catch(e => {
         console.log(e);
@@ -154,7 +151,16 @@ class Task extends Component {
 
   render() {
     const { currentTask } = this.state;
-
+    let statuses = [
+      { label: 'TO DO', value: 'TO DO'},
+      { label: 'IN PROGRESS', value: 'IN PROGRESS'},
+      { label: 'DONE', value: 'DONE'}
+    ]
+    let priorities = [
+      { label: 'LOW', value: 'LOW'},
+      { label: 'MEDIUM', value: 'MEDIUM'},
+      { label: 'HIGH', value: 'HIGH'}
+    ]
     return (
       <div>
         {currentTask ? (
@@ -181,81 +187,65 @@ class Task extends Component {
                   onChange={this.onChangeDescription}
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="status">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="status"
-                  value={currentTask.status}
-                  onChange={this.onChangeStatus}
-                />
+              <div className='form-group'>
+                <label htmlFor="status">Status</label>
+                <br/>
+                <select value={currentTask.status} onChange={this.onChangeStatus}>
+                  {statuses.map((st) => (
+                    <option key={st.value} value={st.value}>
+                      {st.label}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-group">
-                <label htmlFor="dueDate">Due Date</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="dueDate"
-                  value={currentTask.dueDate}
-                  onChange={this.onChangeDueDate}
-                />
-              </div>
+                      <label htmlFor="dueDate">Due Date</label>
+                      <br/>
+                      <DatePicker
+                        selected={this.state.dueDate}
+                        onChange={this.onChangeDueDate}
+                        dateFormat="yyyy-MM-dd"
+                      />
+                    </div>
               <div className="form-group">
                 <label htmlFor="priority">Priority</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="priority"
-                  value={currentTask.priority}
-                  onChange={this.onChangePriority}
-                />
+                <br/>
+                <select value={currentTask.priority} onChange={this.onChangePriority}>
+                  {priorities.map((pr) => (
+                    <option key={pr.value} value={pr.value}>
+                      {pr.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className="form-group">
-                <label>
-                  <strong>State </strong>
-                </label>
-                {currentTask.published ? "Published" : "Pending"}
-              </div>
+  
             </form>
 
-            {currentTask.published ? (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(false)}
-              >
-                UnPublish
-              </button>
-            ) : (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(true)}
-              >
-                Publish
-              </button>
-            )}
+           
+            <br/>
 
-            <button
-              className="badge badge-danger mr-2"
+            <button variant='contained'
               onClick={this.deleteTask}
-            >
+              >
+            
               Delete
-            </button>
+            </button>{' '}
 
             <button
               type="submit"
-              className="badge badge-success"
               onClick={this.updateTask}
+              color='#7393B3'
             >
               Update
             </button>
-            <p>{this.state.message}</p>
+            <br />
+              <p> {this.state.message}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a task...</p>
+           
           </div>
         )}
       </div>

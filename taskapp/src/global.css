@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.side-nav {
+  width: 16rem; 
+  background-color: #f3f4f6;
+}
+
+.main-content {
+  flex-grow: 1; 
+  overflow-y: auto; 
+}
+
+@fontface {
+  font-family: 'Spectral';
+  src: url('https://fonts.googleapis.com/css?family=Spectral')
+}
+
+body {
+  font-family: 'Spectral';
+}
+
+.App {
+  text-align: center;
+}
+
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+
+.submit-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.form {
+  padding: 0.5rem;
+}
+
+.edit-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.button {
+  color: #7393B3
+}

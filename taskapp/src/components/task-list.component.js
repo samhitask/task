@@ -99,16 +99,16 @@ export default class TasksList extends Component {
               </div>
               <div>
                 <label>
-                  <strong>Priority</strong>
+                  <strong>Priority: </strong>
                 </label>{" "}
                 {currentTask.priority}
               </div>
+              <br/>
               <button type="button">
                 <Link
                   to={"/task/" + currentTask.id}
-                  className="badge badge-warning"
                 >
-                  Edit
+                  Edit Task
                 </Link>
                 </button>
                 
