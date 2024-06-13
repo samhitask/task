@@ -17,6 +17,7 @@ class Task extends Component {
     this.updatePublished = this.updatePublished.bind(this);
     this.updateTask = this.updateTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.formatDate = this.formatDate.bind(this);
 
     this.state = {
       currentTask: {
@@ -81,11 +82,20 @@ class Task extends Component {
     }));
   }
 
-  onChangeDueDate = (date) => {
+  formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
+  onChangeDueDate = (e) => {
+    const date = e.target.value;
     this.setState(prevState => ({
       currentTask: {
         ...prevState.currentTask,
-        dueDate: date
+        dueDate: this.formatDate(date)
       }
     }));
   }
@@ -206,12 +216,12 @@ class Task extends Component {
 
             <Form.Group controlId="dueDate">
               <Form.Label>Due Date</Form.Label>
-              <br />
-              <DatePicker
-                selected={currentTask.dueDate}
-                onChange={this.onChangeDueDate}
-                dateFormat="yyyy-MM-dd"
-              />
+              <Form.Control
+                  type="date"
+                  value={currentTask.dueDate}
+                  onChange={this.onChangeDueDate}
+              
+                />
             </Form.Group>
 
             <Form.Group controlId="priority">

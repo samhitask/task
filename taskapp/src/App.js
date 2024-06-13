@@ -6,6 +6,7 @@ import './global.css'
 import CreateTask from "./components/create-task.component";
 import Task from "./components/task.component";
 import TaskList from "./components/task-list.component";
+import Home from "./components/home.component";
 import Sidenav from "./layout/Sidenav";
 
 class App extends Component {
@@ -16,7 +17,7 @@ class App extends Component {
         <div className="main-content">
           <div className="container mt-3">
             <Routes>
-              <Route path="/" element={<TaskList/>} />
+              <Route path="/" element={<Home/>} />
               <Route path="/tasks" element={<TaskList/>} />
               <Route path="/add-tasks" element={<CreateTask/>} />
               <Route path="/task/:id" element={<Task/>} />

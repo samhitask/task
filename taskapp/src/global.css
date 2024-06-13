@@ -10,11 +10,13 @@
 .side-nav {
   width: 16rem; 
   background-color: #f3f4f6;
+  padding-right: 60px;
 }
+
 
 .main-content {
   flex-grow: 1; 
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 @fontface {
@@ -24,6 +26,9 @@
 
 body {
   font-family: 'Spectral';
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .App {
@@ -48,4 +53,14 @@ body {
 .edit-form {
   max-width: 300px;
   margin: auto;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
 }

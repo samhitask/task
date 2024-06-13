@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
 import "../global.css"
 import { Button, Form }  from 'react-bootstrap';
 
@@ -18,6 +15,7 @@ export default class AddTask extends Component {
     this.onChangeDueDate = this.onChangeDueDate.bind(this);
     this.saveTask = this.saveTask.bind(this);
     this.newTask = this.newTask.bind(this);
+    this.formatDate = this.formatDate.bind(this);
 
     this.state = {
       id: null,
@@ -57,10 +55,18 @@ export default class AddTask extends Component {
     });
   }
 
-  onChangeDueDate = (date) => {
-    this.setState({
-      dueDate: date
-    });
+
+  formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
+  onChangeDueDate = (e) => {
+    const date = e.target.value;
+    this.setState({ dueDate: this.formatDate(date) });
   };
 
   saveTask() {
@@ -146,7 +152,7 @@ export default class AddTask extends Component {
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type="text"
-                required
+                
                 value={this.state.description}
                 onChange={this.onChangeDescription}
                 name="description"
@@ -167,12 +173,11 @@ export default class AddTask extends Component {
 
             <Form.Group controlId="dueDate">
               <Form.Label>Due Date</Form.Label>
-              <br />
-              <DatePicker
-                selected={this.state.dueDate}
-                onChange={this.onChangeDueDate}
-                dateFormat="yyyy-MM-dd"
-              />
+              <Form.Control
+                  type="date"
+                  value={this.dueDate}
+                  onChange={this.onChangeDueDate}
+                />
             </Form.Group>
 
             <Form.Group controlId="priority">
