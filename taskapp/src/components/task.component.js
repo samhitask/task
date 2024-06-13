@@ -130,7 +130,7 @@ class Task extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({
-          message: "\nThe task was updated successfully!"
+          message: "The task was updated successfully!"
         });
       })
       .catch(e => {

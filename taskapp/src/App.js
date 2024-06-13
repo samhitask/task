@@ -16,6 +16,7 @@ class App extends Component {
         <div className="main-content">
           <div className="container mt-3">
             <Routes>
+              <Route path="/" element={<TaskList/>} />
               <Route path="/tasks" element={<TaskList/>} />
               <Route path="/add-tasks" element={<CreateTask/>} />
               <Route path="/task/:id" element={<Task/>} />
