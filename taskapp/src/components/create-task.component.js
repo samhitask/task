@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 import "../global.css"
+import { Button }  from 'react-bootstrap';
 
 export default class AddTask extends Component {
 
@@ -28,7 +30,6 @@ export default class AddTask extends Component {
       submitted: false
 
     };
-
     
   
   }
@@ -191,9 +192,10 @@ export default class AddTask extends Component {
                   </div>
                  
                   <br/>
-                  <button onClick={this.saveTask} className="btn btn-success" >
+                  <Button variant="primary" size="md" onClick={this.saveTask}>
                     Submit
-                  </button>
+                  </Button>
+
                 </div>
               )}
             </div>

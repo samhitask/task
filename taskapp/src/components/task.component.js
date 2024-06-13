@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
-import { withRouter } from '../common/with-router';
+import { withRouter } from './with-router';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Button from 'react-bootstrap/Button';
 
 class Task extends Component {
   constructor(props) {
@@ -167,7 +168,8 @@ class Task extends Component {
       <div>
         {currentTask ? (
           <div className="edit-form">
-            <h4>Task</h4>
+            <h4>Edit Task: {currentTask.title}</h4>
+            
             <form>
               <div className="form-group">
                 <label htmlFor="title">Title</label>
@@ -227,20 +229,20 @@ class Task extends Component {
            
             <br/>
 
-            <button variant='contained'
+            <Button
+              variant='success'
+              onClick={this.updateTask}
+              
+            >
+              Update
+            </Button>{' '}
+            <Button variant='danger'
               onClick={this.deleteTask}
               >
             
               Delete
-            </button>.{' '}
+            </Button>
 
-            <button
-              type="submit"
-              onClick={this.updateTask}
-              color='#7393B3'
-            >
-              Update
-            </button>
             <br />
               <p> {this.state.message}</p>
           </div>

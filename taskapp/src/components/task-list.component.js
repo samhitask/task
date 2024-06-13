@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 export default class TasksList extends Component {
   constructor(props) {
@@ -104,13 +105,10 @@ export default class TasksList extends Component {
                 {currentTask.priority}
               </div>
               <br/>
-              <button type="button">
-                <Link
-                  to={"/task/" + currentTask.id}
-                >
+              <Button variant='secondary' href={"/task/" + currentTask.id}>
+               
                   Edit Task
-                </Link>
-                </button>
+                </Button>
                 
             </div>
           ) : (
