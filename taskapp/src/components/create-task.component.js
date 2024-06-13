@@ -124,7 +124,7 @@ export default class AddTask extends Component {
                 <div>
                   <br/>
                   <h4>Task added successfully!</h4>
-                  <button className="btn btn-success" onClick={this.newTask}>
+                  <button className="btn btn-success" onClick={this.createTask}>
                     Add more?
                   </button>
                 </div>
