@@ -24,9 +24,9 @@ const Sidenav = () => {
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/add-tasks" className="sidebar-link">
+          <Link to="/add-task" className="sidebar-link">
             <DocumentArrowUpIcon className="sidebar-icon" />
-            <span className="sidebar-text">Add Tasks</span>
+            <span className="sidebar-text">Add Task</span>
           </Link>
         </li>
       </ul>

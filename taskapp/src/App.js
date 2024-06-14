@@ -19,7 +19,7 @@ class App extends Component {
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/tasks" element={<TaskList/>} />
-              <Route path="/add-tasks" element={<CreateTask/>} />
+              <Route path="/add-task" element={<CreateTask/>} />
               <Route path="/task/:id" element={<Task/>} />
             </Routes>
           </div>

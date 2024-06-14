@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import "../global.css"
-
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 export default class Home extends Component {
@@ -65,28 +65,39 @@ export default class Home extends Component {
     this.setState({ ipCount, doneCount, toDoCount });
     }
 
-
+    
     render() {
         const { ipCount, doneCount, toDoCount } = this.state;
+        const columnStyle = {
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)', 
+            backgroundColor: "#FAA0A0"
+            
+          };
         return (
-            <div className="home">
-              <h1>Task Dashboard</h1>
-              <br/>
-              <div className="status-counts">
-                <div className="status-count">
-                  <h2>To Do: </h2>
-                  <h5>{toDoCount}</h5>
-                </div>
-                <div className="status-count">
-                  <h2>In Progress: </h2>
-                  <h5>{ipCount}</h5>
-                </div>
-                <div className="status-count">
-                  <h2>Done: </h2>
-                  <h5>{doneCount}</h5>
-                </div>
-              </div>
-              </div>
+            <Container className="mt-5">
+                <Row className="justify-content-center"> 
+                <Col md = {9} className="rounded-pill p-3 text-center mb-3" >
+                  <h1> Welcome to your Task Center! </h1>
+                </Col>
+                </Row>
+                <Row className="justify-content-center">
+                    <Col md={3} className="rounded-pill p-3 text-center mb-3" style={{ ...columnStyle, backgroundColor: "#FAA0A0" }}>
+                    <h2>To Do</h2>
+                    <h5>{toDoCount}</h5>
+                    </Col>
+
+                    <Col md={3} className="rounded-pill p-3 text-center mb-3" style={{ ...columnStyle, backgroundColor: "#FAC898" }}>
+                    <h2>In Progress</h2>
+                    <h5>{ipCount}</h5>
+                    </Col>
+
+                    <Col md={3} className="rounded-pill p-3 text-center mb-3" style={{ ...columnStyle, backgroundColor: "#DAF7A6" }}>
+                    <h2>Done</h2>
+                    <h5>{doneCount}</h5>
+                    </Col>
+                </Row>
+            
+            </Container>
           );
-        }
-      }
+        };
+    }
