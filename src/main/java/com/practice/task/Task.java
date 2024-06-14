@@ -3,15 +3,22 @@ package com.practice.task;
 // constraints
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
 import com.practice.task.constraints.PriorityConstraint;
 import com.practice.task.constraints.StatusConstraint;
+import com.practice.task.users.User;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,18 +27,29 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY) // Auto-generated random ID by JPA
-    private long id;
+    @Getter @Setter private long id;
+
+    @Column(nullable = false)
     @NotNull(message = "Title is required") 
     @NotEmpty(message = "Title is required")
-    private String title;
+    @Getter @Setter private String title;
 
-    private String description;
-    private LocalDate dueDate;
+    @Column
+    @Getter @Setter private String description;
+    @Column
+    @Getter @Setter private LocalDate dueDate;
 
+    @Column
     @StatusConstraint
-    private String status;
+    @Getter @Setter private String status;
+
+    @Column
     @PriorityConstraint
-    private String priority;
+    @Getter @Setter private String priority;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @Getter @Setter private User user;
 
 
     protected Task() {} // JPA requires this constructor, but it won't be used
@@ -57,52 +75,4 @@ public class Task {
                 + ", dueDate=" + dueDate + ", priority=" + priority + "]";
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-    
 }

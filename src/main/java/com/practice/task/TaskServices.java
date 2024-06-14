@@ -6,14 +6,31 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.practice.task.users.UserRepository;
+import com.practice.task.users.User;
+
 @Service
 public class TaskServices {
 
     @Autowired
     private TaskRepository repo;
 
-    public TaskServices(final TaskRepository repo) {
+    @Autowired
+    private UserRepository urepo;
+
+    public Task saveTask(Task task, long userId) {
+        User user = urepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        task.setUser(user);
+        return repo.save(task);
+    }
+
+    public List<Task> findTasksByUserId(long userId) {
+        return repo.findByUserId(userId);
+    }
+
+    public TaskServices(final TaskRepository repo, UserRepository urepo) {
         this.repo = repo;
+        this.urepo = urepo;
     }
 
     public Task createTask(Task task) {
