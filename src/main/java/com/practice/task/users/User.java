@@ -1,10 +1,6 @@
 package com.practice.task.users;
 
-import java.util.Collection;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.practice.task.Task;
@@ -25,7 +21,7 @@ import jakarta.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User implements UserDetails { 
+public class User  { 
   
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,8 +40,4 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @Getter @Setter private List<Task> tasks;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return List.of(() -> "write");
-    }
 }

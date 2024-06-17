@@ -26,9 +26,9 @@ class TaskController {
     @Autowired
     private TaskServices serv;
  
-    @PostMapping("/user/{userId}/tasks")
-    public Task postTask(@RequestBody Task task, @PathVariable long userId)  {
-        return serv.saveTask(task, userId);
+    @PostMapping("/tasks")
+    public Task postTask(@RequestBody Task task)  {
+        return serv.createTask(task);
     }
     
     @GetMapping("/tasks/{id}")
@@ -36,9 +36,9 @@ class TaskController {
         return serv.getTaskById(id);
     }
     
-    @GetMapping("/user/{userId}/tasks")
-    public List<Task> getTasks(@PathVariable long userId) {
-        return serv.findTasksByUserId(userId);
+    @GetMapping("/tasks")
+    public List<Task> getTasks() {
+        return serv.getAllTasks();
     }
     @PutMapping("/tasks/{id}")
     public Task putTask(@PathVariable long id, @RequestBody Task task) {
