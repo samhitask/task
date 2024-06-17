@@ -2,21 +2,33 @@ package com.practice.task.users;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
     @Autowired
     private UserRepository repo;
 
-    public User findByEmail (String email) {
-        User user = repo.findByEmail(email);
-        return user;
+     @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repo.findUserByUsername(username).get();
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), null);
+            
     }
 
-    public User findByName(String name) {
-        return repo.findByName(name);
+    public User findByEmail (String email) {
+        return repo.findUserByEmail(email).get();
+    }
+
+    public User findByUsername(String name) {
+        return repo.findUserByUsername(name).get();
     }
 
     public User findById(Long id) {
