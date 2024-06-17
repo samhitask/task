@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.practice.task.users.UserRepository;
+import com.practice.task.users.User;
 
 @Service
 public class TaskServices {
@@ -12,11 +14,17 @@ public class TaskServices {
     @Autowired
     private TaskRepository repo;
 
-    public TaskServices(final TaskRepository repo) {
+    @Autowired
+    private UserRepository userRepo;
+
+    public TaskServices(final TaskRepository repo, final UserRepository userRepo) {
         this.repo = repo;
+        this.userRepo = userRepo;
     }
 
-    public Task createTask(Task task) {
+    public Task createTask(Task task, long userId) {
+        User user = userRepo.findById(userId).get();
+        task.setUser(user);
         return repo.save(task);
     }
 
@@ -25,8 +33,8 @@ public class TaskServices {
         return newTask.get();
     }
 
-    public List<Task> getAllTasks(long userId){
-        return repo.find();
+    public List<Task> getAllTasks(long userId) {
+        return repo.findTasksByUserId(userId);
     }
 
     public Task updateTask(long id, Task task) {

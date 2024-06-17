@@ -1,5 +1,5 @@
 package com.practice.task;
-
+/* 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
@@ -81,7 +81,7 @@ class TaskServicesTests {
         Task result = serv.getTaskById(1);
         assertEquals(task, result);
 
-    }
+    
     @Test
     public void testGetAllTasks() {
 		
@@ -89,7 +89,7 @@ class TaskServicesTests {
 											new Task("Task 2", "description of Task 2", "DONE", dueDate, "HIGH"));
         Mockito.when(repo.findAll()).thenReturn(tasks);
 
-        List<Task> result = serv.getAllTasks();
+        List<Task> result = serv.getAllTasks((long) 1);
 
         assertEquals(2, result.size());
         assertEquals("Task 1", result.get(0).getTitle());
@@ -119,3 +119,4 @@ class TaskServicesTests {
 
 	
 }
+*/

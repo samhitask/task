@@ -16,8 +16,8 @@ public class UserService {
         return user.get();
     }
 
-    public User findByUsername(String name) {
-        return repo.findUserByUsername(name).get();
+    public User findByUsername(String username) {
+        return repo.findUserByUsername(username).get();
     }
 
     public User findById(Long id) {

@@ -37,7 +37,4 @@ public class User  {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) 
     @Getter @Setter private String password;
 
-    @OneToMany(mappedBy = "user")
-    @Getter @Setter private List<Task> tasks;
-
 }

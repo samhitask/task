@@ -26,9 +26,9 @@ class TaskController {
     @Autowired
     private TaskServices serv;
  
-    @PostMapping("/user/{userId}/tasks")
+    @PostMapping("/users/{userId}/tasks")
     public Task postTask(@RequestBody Task task, @PathVariable long userId)  {
-        return serv.createTask(task);
+        return serv.createTask(task, userId);
     }
     
     @GetMapping("/tasks/{id}")
