@@ -1,16 +1,16 @@
 import http from "./http-common";
 
 class TaskDataServices {
-  getAll() {
-    return http.get("/tasks");
+  getAll(userId) {
+    return http.get(`/tasks/${userId}`);
   }
 
   get(id) {
     return http.get(`/tasks/${id}`);
   }
 
-  create(data) {
-    return http.post("/tasks", data);
+  create(data, userId) {
+    return http.post(`/tasks/${userId}`, data);
   }
 
   update(id, data) {

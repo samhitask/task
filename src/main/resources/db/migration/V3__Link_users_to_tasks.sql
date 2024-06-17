@@ -1,8 +1,6 @@
 ALTER TABLE tasks
-ADD COLUMN user_id BIGINT;
+ADD COLUMN IF NOT EXISTS user_id BIGINT;
 
-ALTER TABLE tasks
-ADD CONSTRAINT fk_user;
+ALTER TABLE tasks 
+ADD CONSTRAINT fk_user
 FOREIGN KEY (user_id) REFERENCES users(id);
-
-

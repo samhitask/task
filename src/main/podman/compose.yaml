@@ -1,9 +1,9 @@
 services:
   db:
     image: 'postgres:13.1-alpine'
-    container_name: taskdb
+    container_name: taskappdb
     environment:
-      POSTGRES_DB: taskdb
+      POSTGRES_DB: taskappdb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:

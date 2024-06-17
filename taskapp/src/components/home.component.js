@@ -67,7 +67,7 @@ export default class Home extends Component {
 
     
     render() {
-        const { ipCount, doneCount, toDoCount } = this.state;
+        const { ipCount, doneCount, toDoCount, tasks } = this.state;
         const columnStyle = {
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)', 
             backgroundColor: "#FAA0A0"
