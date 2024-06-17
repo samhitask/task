@@ -1,37 +1,39 @@
-package com.practice.task.users; 
+package com.practice.task.users;
 
-import java.util.Map;
-import jakarta.servlet.http.HttpSession; 
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType; 
-import org.springframework.security.crypto.password.PasswordEncoder; 
-import org.springframework.stereotype.Controller; 
-import org.springframework.web.bind.annotation.GetMapping; 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody; 
+import org.springframework.web.bind.annotation.*;
 
-@Controller 
-public class UserController {         
-   @Autowired private UserService serv; 
-   @Autowired
-   private PasswordEncoder passwordEncoder; 
-   
 
-   @GetMapping("/login") 
-   public String login(HttpServletRequest request, HttpSession session) { 
-      session.setAttribute(
-         "error", "Invalid username and/or password"
-      ); 
-      return "login"; 
-   } 
+@RestController
+public class UserController {
 
-   @PostMapping(
-      value = "/register", 
-      consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = { 
-      MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
-   )
-   public void addUser(@RequestBody User user) {
-      serv.createUser(user); 
-   }
+    @Autowired
+    private UserService serv; 
+
+    public UserController(UserService serv) { 
+       this.serv = serv; 
+    } 
+
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user) {
+        return  serv.createUser(user);
+    }
+
+    @GetMapping("users/{id}")
+    public User getUserById(@PathVariable Long id) {
+       return serv.findById(id);
+    }
+
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return serv.findAllUsers();
+    }
+
+    @DeleteMapping("user/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        serv.deleteUser(id);
+        return;
+    }
 }

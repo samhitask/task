@@ -25,8 +25,8 @@ public class TaskServices {
         return newTask.get();
     }
 
-    public List<Task> getAllTasks(){
-        return repo.findAll();
+    public List<Task> getAllTasks(long userId){
+        return repo.find();
     }
 
     public Task updateTask(long id, Task task) {
