@@ -1,27 +1,27 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import Button from 'react-bootstrap/Button';
+import { UserContext } from '../UserContext'; // Import UserContext
 
 export default class TasksList extends Component {
+  static contextType = UserContext; // Set contextType to UserContext
+
   constructor(props) {
     super(props);
-    this.retrieveTasks = this.retrieveTasks.bind(this);
-    this.refreshList = this.refreshList.bind(this);
-    this.setActiveTask = this.setActiveTask.bind(this);
     this.state = {
-        tasks: [],
-        currentTask: null,
-        currentIndex: -1,
-      };
+      tasks: [],
+      currentTask: null,
+      currentIndex: -1,
+    };
   }
 
   componentDidMount() {
-    this.retrieveTasks();
+    const { userId } = this.context; // Access userId from context
+    this.retrieveTasks(userId);
   }
 
-
-  retrieveTasks() {
-    TaskDataService.getAll()
+  retrieveTasks(userId) {
+    TaskDataService.getAll(userId) // Pass userId to getAll method
       .then(response => {
         this.setState({
           tasks: response.data
@@ -34,7 +34,8 @@ export default class TasksList extends Component {
   }
 
   refreshList() {
-    this.retrieveTasks();
+    const { userId } = this.context; // Access userId from context
+    this.retrieveTasks(userId);
     this.setState({
       currentTask: null,
       currentIndex: -1
@@ -53,14 +54,9 @@ export default class TasksList extends Component {
 
     return (
       <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
-    
-          </div>
-        </div>
         <div className="col-md-6">
+          < br/>
           <h4>Task Center</h4>
-
           <ul className="list-group">
             {tasks &&
               tasks.map((task, index) => (
@@ -76,7 +72,6 @@ export default class TasksList extends Component {
                 </li>
               ))}
           </ul>
-
         </div>
         <div className="col-md-6">
           {currentTask ? (
@@ -105,10 +100,8 @@ export default class TasksList extends Component {
               </div>
               <br/>
               <Button variant='secondary' href={"/task/" + currentTask.id}>
-               
-                  Edit Task
-                </Button>
-                
+                Edit Task
+              </Button>
             </div>
           ) : (
             <div>

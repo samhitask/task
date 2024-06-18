@@ -10,7 +10,7 @@ class TaskDataServices {
   }
 
   create(data, userId) {
-    return http.post(`/tasks/${userId}`, data);
+    return http.post(`/users/${userId}/tasks`, data);
   }
 
   update(id, data) {

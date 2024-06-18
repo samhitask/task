@@ -44,7 +44,7 @@ public class Task {
     @Getter @Setter private String status;
 
     @Column
-    @PriorityConstraint
+   // @PriorityConstraint
     @Getter @Setter private String priority;
 
     @ManyToOne

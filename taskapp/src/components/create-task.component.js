@@ -1,62 +1,23 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import TaskDataService from "../task.service";
 import "../global.css"
-import { Button, Form }  from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import { UserContext } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
 
-export default class AddTask extends Component {
+const AddTask = () => {
+  const { userId, loggedIn } = useContext(UserContext);
+  const navigate = useNavigate();
 
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [status, setStatus] = useState('TO DO');
+  const [dueDate, setDueDate] = useState('');
+  const [priority, setPriority] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  constructor(props) {
-    super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
-    this.onChangePriority = this.onChangePriority.bind(this);
-    this.onChangeDueDate = this.onChangeDueDate.bind(this);
-    this.saveTask = this.saveTask.bind(this);
-    this.newTask = this.newTask.bind(this);
-    this.formatDate = this.formatDate.bind(this);
-
-    this.state = {
-      id: null,
-      title: "",
-      description: "", 
-      status: 'TO DO',
-      dueDate: new Date(),
-      priority: '',
-
-      submitted: false
-
-    };
-    
-  
-  }
-
-  onChangeTitle(e) {
-    this.setState({
-      title: e.target.value
-    });
-  }
-
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
-  onChangeStatus(e) {
-    this.setState({
-      status: e.target.value
-    });
-  } 
-  
-  onChangePriority(e) {
-    this.setState({
-      priority: e.target.value
-    });
-  }
-
-
-  formatDate = (dateString) => {
+  const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -64,141 +25,123 @@ export default class AddTask extends Component {
     return `${year}-${month}-${day}`;
   };
 
-  onChangeDueDate = (e) => {
-    const date = e.target.value;
-    this.setState({ dueDate: this.formatDate(date) });
+  const saveTask = async () => {
+    try {
+      const data = {
+        title,
+        description,
+        status,
+        dueDate: formatDate(dueDate),
+        priority
+      };
+
+      const response = await TaskDataService.create(data, userId);
+      console.log(response.data);
+      setSubmitted(true);
+    } catch (e) {
+      console.error(e);
+      setErrorMessage('Failed to save task. Please try again.');
+    }
   };
 
-  saveTask() {
-    var data = {
-      title: this.state.title,
-      description: this.state.description,
-      status: this.state.status,
-      dueDate: this.state.dueDate,
-      priority: this.state.priority,
+  const newTask = () => {
+    setTitle('');
+    setDescription('');
+    setStatus('TO DO');
+    setDueDate('');
+    setPriority('');
+    setSubmitted(false);
+  };
 
-      submitted: true
-    };
-
-    TaskDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          status: response.data.status,
-          dueDate: response.data.dueDate,
-          priority: response.data.priority,
-
-          submitted: true
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  if (!loggedIn) {
+    navigate('/login');
+    return null;
   }
 
-  newTask() {
-    this.setState({
-      id: null,
-      title: "",
-      description: "",
-      dueDate: Date,
-      status: "",
-      priority: "",
+  const statuses = [
+    { label: 'TO DO', value: 'TO DO' },
+    { label: 'IN PROGRESS', value: 'IN PROGRESS' },
+    { label: 'DONE', value: 'DONE' }
+  ];
 
-      submitted: false
-    });
-  }
+  const priorities = [
+    { label: 'LOW', value: 'LOW' },
+    { label: 'MEDIUM', value: 'MEDIUM' },
+    { label: 'HIGH', value: 'HIGH' }
+  ];
 
-  render() {
+  return (
+    <div className="submit-form">
+      {submitted ? (
+        <div>
+          <h4>Task added successfully!</h4>
+          <Button variant="primary" onClick={newTask}>
+            Add more?
+          </Button>
+        </div>
+      ) : (
+        <Form onSubmit={(e) => { e.preventDefault(); saveTask(); }}>
+          <h2>Add new task</h2>
+          {errorMessage && <p className="error">{errorMessage}</p>}
+          <Form.Group controlId="title">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+            />
+          </Form.Group>
 
-    let statuses = [
-      { label: 'TO DO', value: 'TO DO'},
-      { label: 'IN PROGRESS', value: 'IN PROGRESS'},
-      { label: 'DONE', value: 'DONE'}
-    ]
+          <Form.Group controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              name="description"
+            />
+          </Form.Group>
 
-    let priorities = [
-      { label: 'LOW', value: 'LOW'},
-      { label: 'MEDIUM', value: 'MEDIUM'},
-      { label: 'HIGH', value: 'HIGH'}
-    ]
-    return (
-      <div className="submit-form">
-        {this.state.submitted ? (
-          <div>
-            <br />
-            <h4>Task added successfully!</h4>
-            <Button variant="primary" href="/add-tasks" className="success">
-              Add more?
-            </Button>
-          </div>
-        ) : (
-          <Form>
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={this.state.title}
-                onChange={this.onChangeTitle}
-                name="title"
-              />
-            </Form.Group>
+          <Form.Group controlId="status">
+            <Form.Label>Status</Form.Label>
+            <Form.Select onChange={(e) => setStatus(e.target.value)} value={status}>
+              {statuses.map((st) => (
+                <option key={st.value} value={st.value}>
+                  {st.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                
-                value={this.state.description}
-                onChange={this.onChangeDescription}
-                name="description"
-              />
-            </Form.Group>
+          <Form.Group controlId="dueDate">
+            <Form.Label>Due Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
+          </Form.Group>
 
-            <Form.Group controlId="status">
-              <Form.Label>Status</Form.Label>
-              <Form.Select onChange={this.onChangeStatus}>
-                <option value=""> Select a status </option>
-                {statuses.map((st) => (
-                  <option key={st.label} value={st.value}>
-                    {st.label}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+          <Form.Group controlId="priority">
+            <Form.Label>Priority</Form.Label>
+            <Form.Select onChange={(e) => setPriority(e.target.value)} value={priority}>
+              {priorities.map((pr) => (
+                <option key={pr.value} value={pr.value}>
+                  {pr.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-            <Form.Group controlId="dueDate">
-              <Form.Label>Due Date</Form.Label>
-              <Form.Control
-                  type="date"
-                  value={this.dueDate}
-                  onChange={this.onChangeDueDate}
-                />
-            </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+      )}
+    </div>
+  );
+};
 
-            <Form.Group controlId="priority">
-              <Form.Label>Priority</Form.Label>
-              <Form.Select onChange={this.onChangePriority}>
-                <option value="">Select a priority</option>
-                {priorities.map((pr) => (
-                  <option key={pr.label} value={pr.value}>
-                    {pr.label}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-
-            <br />
-            <Button variant="primary" size="md" onClick={this.saveTask}>
-              Submit
-            </Button>
-          </Form>
-        )}
-      </div>
-    );
-  }
-}
+export default AddTask;

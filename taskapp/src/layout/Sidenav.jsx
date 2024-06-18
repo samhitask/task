@@ -12,7 +12,7 @@ const Sidenav = () => {
       </div>
       <ul className="sidebar-menu">
       <li className="sidebar-item">  
-          <Link to="/" className="sidebar-link">
+          <Link to="/home" className="sidebar-link">
             <HomeIcon className="sidebar-icon" />
             <span className="sidebar-text">Home</span>
           </Link>

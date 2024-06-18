@@ -9,8 +9,12 @@ class UserDataServices {
     return http.get(`/users/${id}`);
   }
 
+  getUsername(username) {
+    return http.get(`/users/api/${username}`)
+  }
+
   create(data) {
-    return http.post(`/users}`, data);
+    return http.post(`/users`, data);
   }
 
   delete(id) {
