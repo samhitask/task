@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.practice.task.users.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import com.practice.task.users.User;
 
 @Service
@@ -52,7 +55,8 @@ public class TaskServices {
         repo.deleteById(id);
         return;
     }
-
+    
+    @Transactional
     public void deleteTasks(long userId) {
         repo.deleteByUserId(userId);
     }
