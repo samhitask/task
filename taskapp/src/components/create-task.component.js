@@ -72,17 +72,17 @@ const AddTask = () => {
 
   return (
     <div className="submit-form">
-      {submitted ? (
-        <div>
-          <h4>Task added successfully!</h4>
-          <Button variant="primary" onClick={newTask}>
-            Add more?
-          </Button>
-        </div>
-      ) : (
-        <Form onSubmit={(e) => { e.preventDefault(); saveTask(); }}>
-          <h2>Add new task</h2>
-          {errorMessage && <p className="error">{errorMessage}</p>}
+        {submitted ? (
+          <div>
+            <br />
+            <h4>Task added successfully!</h4>
+            <Button variant="primary" href="/add-task" className="success">
+              Add more?
+            </Button>
+          </div>
+        ) : (
+          <Form onSubmit={(e) => { e.preventDefault(); saveTask(); }}>
+            {errorMessage && <p className="error">{errorMessage}</p>}
           <Form.Group controlId="title">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -104,18 +104,19 @@ const AddTask = () => {
             />
           </Form.Group>
 
-          <Form.Group controlId="status">
-            <Form.Label>Status</Form.Label>
-            <Form.Select onChange={(e) => setStatus(e.target.value)} value={status}>
-              {statuses.map((st) => (
-                <option key={st.value} value={st.value}>
-                  {st.label}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
+            <Form.Group controlId="status">
+              <Form.Label>Status</Form.Label>
+              <Form.Select onChange={(e) => setStatus(e.target.value)}>
+                <option value=""> Select a status </option>
+                {statuses.map((st) => (
+                  <option key={st.label} value={st.value}>
+                    {st.label}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
 
-          <Form.Group controlId="dueDate">
+            <Form.Group controlId="dueDate">
             <Form.Label>Due Date</Form.Label>
             <Form.Control
               type="date"
@@ -124,24 +125,26 @@ const AddTask = () => {
             />
           </Form.Group>
 
-          <Form.Group controlId="priority">
-            <Form.Label>Priority</Form.Label>
-            <Form.Select onChange={(e) => setPriority(e.target.value)} value={priority}>
-              {priorities.map((pr) => (
-                <option key={pr.value} value={pr.value}>
-                  {pr.label}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          < br/>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-      )}
-    </div>
+
+            <Form.Group controlId="priority">
+              <Form.Label>Priority</Form.Label>
+              <Form.Select onChange={(e) => setPriority(e.target.value)}>
+                <option value="">Select a priority</option>
+                {priorities.map((pr) => (
+                  <option key={pr.label} value={pr.value}>
+                    {pr.label}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            <br />
+            <Button type="submit" variant="primary" size="md">
+              Submit
+            </Button>
+          </Form>
+        )   
+      } </div>
   );
 };
-
 export default AddTask;

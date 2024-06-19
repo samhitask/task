@@ -43,7 +43,7 @@ saveUser() {
       console.log(response.data);
     })
     .catch(e => {
-      console.log(e);
+      alert("Username and/or email already taken.")
     });
 }
 

@@ -15,7 +15,7 @@ export default class Profile extends Component {
       await UserDataService.delete(userId);
       logoutUser();
     } catch (error) {
-      console.error('Error deleting user and tasks:', error);
+      alert('Error deleting user and tasks:', error);
 
   }
 }

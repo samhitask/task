@@ -13,7 +13,7 @@ export default class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
-      errorMessage: ''
+      
     };
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
@@ -45,19 +45,19 @@ export default class LoginForm extends Component {
         if (user.username === username && user.password === password) {
           updateUser(user.id, user.username, true);
         } else {
-          this.setState({ errorMessage: 'Incorrect password' });
+          alert('Incorrect password' );
         }
       } else {
-        this.setState({ errorMessage: 'No user found with this username' });
+       alert( 'No user found with this username' );
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      this.setState({ errorMessage: 'Error logging in. Please try again later.' });
+      alert('Error logging in. Please try again later.');
     }
   }
 
   render() {
-    const { username, password, errorMessage } = this.state;
+    const { username, password } = this.state;
     const { loggedIn } = this.context;
 
     if (loggedIn) {
@@ -88,7 +88,8 @@ export default class LoginForm extends Component {
               onChange={this.onChangePassword}
             />
           </Form.Group>
-          {errorMessage && <p>{errorMessage}</p>}
+         
+        
 
           <br />
           <Button type="submit" size="md">
