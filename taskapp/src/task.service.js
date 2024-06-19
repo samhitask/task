@@ -2,7 +2,7 @@ import http from "./http-common";
 
 class TaskDataServices {
   getAll(userId) {
-    return http.get(`/tasks/${userId}`);
+    return http.get(`users/${userId}/tasks`);
   }
 
   get(id) {

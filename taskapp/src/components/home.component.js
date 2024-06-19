@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TaskDataService from '../task.service';
 import { Container, Row, Col, Button, Stack } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 
 export default class Home extends Component {
@@ -106,15 +107,21 @@ export default class Home extends Component {
         </Row>
 
         <Stack gap={3}>
-          <Button variant='secondary' href="/tasks">
-            View tasks
-          </Button>
-          <Button variant='secondary' href="/add-task">
-            Add new task
-          </Button>
-          <Button variant='secondary' onClick={logoutUser} href="/login">
+          <Link to="/tasks" style={{ width: '100%' }}>
+            <Button variant='secondary' style={{ width: '100%' }}>
+              View tasks
+            </Button>
+          </Link>
+          <Link to="/add-task" style={{ width: '100%' }}>
+            <Button variant='secondary' style={{ width: '100%' }}>
+              Add new task
+            </Button>
+          </Link>
+          <Link to="/login" style={{ width: '100%' }}>
+          <Button variant='danger' onClick={logoutUser} style={{ width: '100%' }}>
             Log out
           </Button>
+          </Link>
         </Stack>
       </Container>
     );
