@@ -42,7 +42,7 @@ export default class Profile extends Component {
         <Button href='/login' variant='danger' onClick={() => this.context.logoutUser()} style={{ width: '100%' }}>
             Logout
           </Button>
-          <Button variant='danger' onClick={() => this.deleteAllTasks(userId)} style={{ width: '100%' }}>
+          <Button href='/home' variant='danger' onClick={() => this.deleteAllTasks(userId)} style={{ width: '100%' }}>
             Delete all tasks
           </Button>
           <Button variant='danger' onClick={() => this.deleteUser(userId)} style={{ width: '100%' }}>

@@ -97,7 +97,7 @@ export default class LoginForm extends Component {
           </Button>
           <br />
           <br />
-          <Button href="/sign-up">Create New Account</Button>
+          <Button href="/sign-up">Create new account</Button>
         </Form>
       </div>
     );
