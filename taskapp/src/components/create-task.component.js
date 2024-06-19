@@ -82,7 +82,11 @@ const AddTask = () => {
           </div>
         ) : (
           <Form onSubmit={(e) => { e.preventDefault(); saveTask(); }}>
+            <br/>
+            <h3> Add new task</h3>
             {errorMessage && <p className="error">{errorMessage}</p>}
+            <br/>
+
           <Form.Group controlId="title">
             <Form.Label>Title</Form.Label>
             <Form.Control

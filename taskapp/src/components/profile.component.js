@@ -15,9 +15,15 @@ export default class Profile extends Component {
       await UserDataService.delete(userId);
       logoutUser();
     } catch (error) {
-      alert('Error deleting user and tasks:', error);
-
+      console.log('Error deleting user and tasks:', error);
   }
+}
+  async deleteAllTasks(userId) {
+    try {
+      await TaskDataService.deleteAll(userId);
+    } catch (error) {
+      console.log('Error deleting tasks:', error);
+  } 
 }
 
   render() {
@@ -33,8 +39,11 @@ export default class Profile extends Component {
         </Row>
 
         <Stack gap={3}>
-          <Button href='/login' variant='danger' onClick={() => this.context.logoutUser()} style={{ width: '100%' }}>
-            Log out
+        <Button href='/login' variant='danger' onClick={() => this.context.logoutUser()} style={{ width: '100%' }}>
+            Logout
+          </Button>
+          <Button variant='danger' onClick={() => this.deleteAllTasks(userId)} style={{ width: '100%' }}>
+            Delete all tasks
           </Button>
           <Button variant='danger' onClick={() => this.deleteUser(userId)} style={{ width: '100%' }}>
             Delete account

@@ -22,6 +22,7 @@ const App = () => {
         <div className="main-content">
           <div className="container mt-3">
             <Routes>
+                <Route path="" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/" element={<PrivateRoute />}>

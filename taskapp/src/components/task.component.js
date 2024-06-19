@@ -178,8 +178,9 @@ class Task extends Component {
       <div>
         {currentTask ? (
           <div className="edit-form">
-            <h4>Edit Task: {currentTask.title}</h4>
-            
+            <br/>
+            <h3>Edit Task: {currentTask.title}</h3>
+            <br/>
             <Form>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
