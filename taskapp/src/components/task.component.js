@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import { withRouter } from './with-router';
-import DatePicker from "react-datepicker";
+import '../global.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Form } from 'react-bootstrap';
 

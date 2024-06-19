@@ -3,6 +3,7 @@ import UserDataService from '../user.service';
 import { UserContext } from '../UserContext';
 import { Form, Button } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
+import '../global.css';
 
 export default class LoginForm extends Component {
   static contextType = UserContext;

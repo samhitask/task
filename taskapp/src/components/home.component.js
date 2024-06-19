@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TaskDataService from '../task.service';
 import { Container, Row, Col, Button, Stack } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../global.css';
 import { UserContext } from '../UserContext';
 
 export default class Home extends Component {

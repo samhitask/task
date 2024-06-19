@@ -53,4 +53,8 @@ public class TaskServices {
         return;
     }
 
+    public void deleteTasks(long userId) {
+        repo.deleteByUserId(userId);
+    }
+
 }

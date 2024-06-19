@@ -20,6 +20,10 @@ class TaskDataServices {
   delete(id) {
     return http.delete(`/tasks/${id}`);
   }
+
+  deleteAll(userId) {
+    return http.delete(`/users/${userId}/tasks`)
+  }
 }
 
 export default new TaskDataServices();

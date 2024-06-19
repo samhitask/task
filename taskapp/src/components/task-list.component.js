@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TaskDataService from "../task.service";
 import Button from 'react-bootstrap/Button';
+import '../global.css';
 import { UserContext } from '../UserContext'; // Import UserContext
 
 export default class TasksList extends Component {
@@ -76,6 +77,7 @@ export default class TasksList extends Component {
         <div className="col-md-6">
           {currentTask ? (
             <div>
+              < br/>
               <h4>{currentTask.title}</h4>
               <div>
                 {currentTask.description}

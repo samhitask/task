@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     public List<Task> findTasksByUserId(long userId);
-
+    void deleteByUserId(Long userId);
     
 }

@@ -29,6 +29,7 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('loggedIn');
   };
 
+
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     const storedUsername = localStorage.getItem('username');

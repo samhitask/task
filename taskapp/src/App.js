@@ -12,6 +12,7 @@ import Sidenav from './layout/Sidenav';
 import SignUp from './components/sign-up.component';
 import { UserProvider } from './UserContext';
 import PrivateRoute from './PrivateRoute';
+import Profile from './components/profile.component';
 
 const App = () => {
   return (
@@ -21,13 +22,14 @@ const App = () => {
         <div className="main-content">
           <div className="container mt-3">
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/" element={<PrivateRoute />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/" element={<PrivateRoute />}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/tasks" element={<TaskList />} />
                 <Route path="/add-task" element={<CreateTask />} />
                 <Route path="/task/:id" element={<Task />} />
+                <Route path="/profile" element={<Profile />} />
               </Route>
             </Routes>
           </div>

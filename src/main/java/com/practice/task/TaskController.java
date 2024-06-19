@@ -49,5 +49,10 @@ class TaskController {
    public void removeTask(@PathVariable long id) {
         serv.deleteTask(id);
    }
+
+   @DeleteMapping("/users/{userId}/tasks")
+   public void removeAllTasks(@PathVariable long userId) {
+       serv.deleteTasks(userId);
+   }
    
 }
