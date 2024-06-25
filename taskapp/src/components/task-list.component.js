@@ -92,7 +92,7 @@ export default class TasksList extends Component {
                 <label>
                   <strong>Due Date:</strong>
                 </label>{" "}
-                {currentTask.dueDate}
+                {new Date(currentTask.dueDate).toLocaleDateString()}
               </div>
               <div>
                 <label>
