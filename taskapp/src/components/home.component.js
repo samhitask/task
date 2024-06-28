@@ -48,20 +48,27 @@ export default class Home extends Component {
     let pastDue = [];
   
     tasks.forEach(task => {
-      let date = new Date(task.dueDate);
-      let time = date.getTime() - Date.now(); 
-      if ((time / (1000 * 3600 * 24)) <= 5 && (time / (1000 * 3600 * 24)) >= 0 ) {
-        if (task.status != "DONE") {
-          upcoming.push(task);
-        }
+      // Parse task due date and set it to the end of the day
+      let dueDate = new Date(task.dueDate);
+      dueDate.setHours(23, 59, 59, 999);
+    
+      // Get the current date and set it to the start of the day
+      let currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+    
+      // Calculate the date 5 days from now
+      let fiveDaysFromNow = new Date(currentDate);
+      fiveDaysFromNow.setDate(currentDate.getDate() + 5);
+    
+      // Check if the task is past due or upcoming
+      if (dueDate < currentDate && task.status != "DONE") {
+        pastDue.push(task);
+      } else if (dueDate >= currentDate && dueDate <= fiveDaysFromNow && task.status != "DONE") {
+        upcoming.push(task);
       }
-      else if ((time / (1000 * 3600 * 24)) < 0) {
-        if (task.status != "DONE") {
-          pastDue.push(task);
-        }
-        
-      }
-    })
+    });
+    
+  
   
     this.setState({ pastDue, upcoming });
  }
@@ -125,7 +132,11 @@ export default class Home extends Component {
             <h5>{doneCount}</h5>
           </Col>
         </Row>
-
+        <Row className="justify-content-center">
+          <Col md={9} className="rounded-pill p-3 text-center mb-3 mx-2">
+            <h1>Action Center</h1>
+          </Col>
+        </Row>
         <Row className="justify-content-center">
           {upcoming && upcoming.length > 0 && (
             <>
@@ -135,8 +146,8 @@ export default class Home extends Component {
                 <Col md={4} key={index} className="mb-3">
                   <Card key={index} className="mb-3">
                     <Card.Body>
-                      <Card.Title className="mb-2"> {task.title} — {new Date(task.dueDate).toLocaleDateString()} </Card.Title>
-                      <Card.Text className="mb-2">Status: {task.status}</Card.Text>
+                      <Card.Title className="mb-2"> {task.title} </Card.Title>
+                      <Card.Text className="mb-2"> <strong>Due Date: </strong> {new Date(task.dueDate).toLocaleDateString('en-US', {timeZone: 'UTC'})} </Card.Text>
                       <Button variant='secondary' href={"/task/" + task.id}>
                         View Task
                       </Button>
@@ -151,13 +162,12 @@ export default class Home extends Component {
           {pastDue && pastDue.length > 0 && (
             <>
               <h3 className="text-center w-100">Past Due Tasks</h3>
-              <br/>
               {pastDue.map((task, index) => (
                 <Col md={4} key={index} className="mb-3">
                   <Card key={index} className="mb-3">
                     <Card.Body>
-                      <Card.Title className="mb-2">{task.title} — {new Date(task.dueDate).toLocaleDateString()} </Card.Title>
-                      <Card.Text className="mb-2">Status: {task.status}</Card.Text>
+                      <Card.Title className="mb-2">{task.title} </Card.Title>
+                      <Card.Text className="mb-2"> <strong>Due Date:</strong> {new Date(task.dueDate).toLocaleDateString('en-US', {timeZone: 'UTC'})} </Card.Text>
                       <Button variant='danger' href={"/task/" + task.id}>
                         View Task
                       </Button>
@@ -168,11 +178,7 @@ export default class Home extends Component {
             </>
           )}
         </Row>
-        <Row className="justify-content-center">
-          <Col md={9} className="rounded-pill p-3 text-center mb-3 mx-2">
-            <h1>Action Center</h1>
-          </Col>
-        </Row>
+
         <Stack gap={3}>
           <Link to="/tasks" style={{ width: '100%' }}>
             <Button variant='secondary' style={{ width: '100%' }}>

@@ -29,7 +29,6 @@ class Task extends Component {
         priority: "",
         published: false
       },
-      message: ""
     };
   }
 
@@ -84,10 +83,7 @@ class Task extends Component {
 
   formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
+    return date.toISOString().split('T')[0];
   };
 
   onChangeDueDate = (e) => {
@@ -142,9 +138,8 @@ class Task extends Component {
     )
       .then(response => {
         console.log(response.data);
-        this.setState({
-          message: "The task was updated successfully!"
-        });
+        alert("The task was successfully updated.")
+        this.props.router.navigate('/tasks');
       })
       .catch(e => {
         console.log(e);
@@ -155,6 +150,8 @@ class Task extends Component {
     TaskDataService.delete(this.state.currentTask.id)
       .then(response => {
         console.log(response.data);
+        alert("The task was successfully deleted.")
+        
         this.props.router.navigate('/tasks');
       })
       .catch(e => {
@@ -257,7 +254,6 @@ class Task extends Component {
             </Button>
 
             <br />
-              <p> {this.state.message}</p>
           </div>
         ) : (
           <div>

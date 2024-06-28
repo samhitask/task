@@ -50,6 +50,30 @@ export default class TasksList extends Component {
     });
   }
 
+  renderPriorityColor = (priority) => {
+    let color;
+    if (priority === 'HIGH') {
+      color = '#C9CC3F';
+    } else if (priority === 'MEDIUM') {
+      color = '#F28C28';
+    } else if (priority === 'LOW') {
+      color = '#93C572';
+    }
+    return <span style={{ color }}>{priority}</span>;
+};
+  
+renderStatusColor = (status) => {
+    let color;
+    if (status === 'DONE') {
+      color = '#93C572';
+    } else if (status === 'IN PROGRESS') {
+      color = '#F28C28';
+    } else if (status === 'TO DO') {
+      color = '#CD5C5C';
+    }
+    return <span style={{ color  }}>{status}</span>;
+};
+
   render() {
     const { tasks, currentTask, currentIndex } = this.state;
 
@@ -86,19 +110,19 @@ export default class TasksList extends Component {
                 <label>
                   <strong>Status:</strong>
                 </label>{" "}
-                {currentTask.status}
+                {currentTask && this.renderStatusColor(currentTask.status)}
               </div>
               <div>
                 <label>
                   <strong>Due Date:</strong>
                 </label>{" "}
-                {new Date(currentTask.dueDate).toLocaleDateString()}
+                {currentTask && currentTask.dueDate}
               </div>
               <div>
                 <label>
                   <strong>Priority: </strong>
                 </label>{" "}
-                {currentTask.priority}
+                {currentTask && this.renderPriorityColor(currentTask.priority)}
               </div>
               <br/>
               <Button variant='secondary' href={"/task/" + currentTask.id}>
